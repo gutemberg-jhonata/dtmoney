@@ -20,4 +20,4 @@ yarn dev
 
 ## 💻 Projeto
 
-O dtmoney é uma aplicação para controle financeiro desenvolvida durante o bootcamp Ignite, na trilha ReactJS.
+O dtmoney é uma aplicação para controle financeiro desenvolvido durante o bootcamp Ignite, na trilha ReactJS.
