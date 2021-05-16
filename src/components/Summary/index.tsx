@@ -1,14 +1,34 @@
-import { useContext } from 'react';
-import incomeImg from '../../assets/income.svg';
-import outcomeImg from '../../assets/outcome.svg';
-import totalImg from '../../assets/total.svg';
-import { TransactionsContext } from '../../contexts/TransactionsContext';
+import { useContext } from "react";
+import incomeImg from "../../assets/income.svg";
+import outcomeImg from "../../assets/outcome.svg";
+import totalImg from "../../assets/total.svg";
+import { TransactionsContext } from "../../contexts/TransactionsContext";
 
 import { Container } from "./styles";
 
 export function Summary() {
   const { transactions } = useContext(TransactionsContext);
-  console.log(transactions);
+
+  const { deposits, withdraws, total } = transactions.reduce(
+    (acc, transaction) => {
+      const { type, amount } = transaction;
+
+      if (type === "deposit") {
+        acc.deposits += amount;
+        acc.total += amount;
+      } else {
+        acc.withdraws += amount;
+        acc.total -= amount;
+      }
+
+      return acc;
+    },
+    {
+      deposits: 0,
+      withdraws: 0,
+      total: 0,
+    }
+  );
 
   return (
     <Container>
@@ -17,22 +37,38 @@ export function Summary() {
           <p>Entradas</p>
           <img src={incomeImg} alt="Entradas" />
         </header>
-        <strong>R$ 17.400,00</strong>
+        <strong>
+          {new Intl.NumberFormat("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+          }).format(deposits)}
+        </strong>
       </div>
       <div>
         <header>
           <p>Saídas</p>
           <img src={outcomeImg} alt="Saídas" />
         </header>
-        <strong>- R$ 1.259,00</strong>
+        <strong>
+          -{" "}
+          {new Intl.NumberFormat("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+          }).format(withdraws)}
+        </strong>
       </div>
       <div>
         <header>
           <p>Total</p>
           <img src={totalImg} alt="Total" />
         </header>
-        <strong>R$ 16.141,00</strong>
+        <strong>
+          {new Intl.NumberFormat("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+          }).format(total)}
+        </strong>
       </div>
     </Container>
-  )
+  );
 }
