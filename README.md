@@ -36,7 +36,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 ```bash 
 git clone https://github.com/gutemberg-jhonata/dtmoney.git
 cd dtmoney
-yarn dev
+yarn start
 ```
 
 ## 💻 Projeto
